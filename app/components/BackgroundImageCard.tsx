@@ -6,7 +6,6 @@ import {GoDotFill} from "react-icons/go"
 
 export function BackgroudImageCard(data : any) {
     const user = data.user;
-    console.log(user)
     return (
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mx-3">
 

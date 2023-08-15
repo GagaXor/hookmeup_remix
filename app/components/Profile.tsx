@@ -58,14 +58,12 @@ export default function Profile() {
                         <button className="text-sm font-semibold outline outline-cyan-500 rounded-xl h-6 w-16">Report</button>
                     </div>                    
                 </div>
-                
-
-                <div className="flex ... gap-1">
-                    <BsWhatsapp className="fill-green-500 text-xl font-bold my-auto my-auto"/>
-                    <p className="text-sm my-auto">+2347048139314</p>
-                </div>
                 <p className="bg-gray-800 outline outline-cyan-500 p-2 rounded-lg">slurpy horny pussy ready to ride your dick and make feel good…..sweet chic to make your time worth it, im fun to chill with, i give a nasty sweet blow job too 😋magnetic clean and wet pussy,sensual, and very sweet body to grace your bed😛
                 </p>
+                <div className="flex ... gap-1">
+                    <BsWhatsapp className="fill-green-500 text-xl font-bold my-auto"/>
+                    <p className="text-sm my-auto">+2347048139314</p>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 md:col-span-2 ">
