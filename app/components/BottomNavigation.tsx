@@ -1,6 +1,6 @@
 import { BsSearch} from "react-icons/bs"
-
 export function BottomNavigation() {
+
     return (
         <div className="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 border bg-gray-600 border-white rounded-full bottom-1 left-1/2  ">
             <div className="grid h-full max-w-lg grid-cols-5 mx-auto">

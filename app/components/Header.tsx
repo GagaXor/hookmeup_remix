@@ -1,7 +1,8 @@
 import { Navbar, Dropdown, Avatar } from "flowbite-react"
+import { Link } from "@remix-run/react"
 
-export  function Header(data: any) {
-    const user = data.user
+export  function Header(props: any) {
+    const user = props.user
     return (
       <div className="mb-3 grid grid-cols-1 ">
         <Navbar
@@ -18,35 +19,62 @@ export  function Header(data: any) {
                 Hook Me Up
                 </span>
             </Navbar.Brand>
-            <div className="flex md:order-2 z-50">
+            {user?.profile && <div className="flex md:order-2 z-50">
                 <Dropdown
                 inline
-                label={<Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded/>}
+                label={<Avatar alt="User settings" img={user?.profile?.profilePictureUrl} rounded/>}
                 >
                 <Dropdown.Header>
                     <span className="block text-sm">
-                    Bonnie Green
+                    {user.profile.fullName}
                     </span>
                     <span className="block truncate text-sm font-medium">
                     {user.email}
                     </span>
                 </Dropdown.Header>
+                <Link to="/myProfile"  >
+                    <Dropdown.Item >
+                        View My Profile
+                    </Dropdown.Item> 
+                </Link>
                 <Dropdown.Item>
-                    Dashboard
+                    My Booking
                 </Dropdown.Item>
                 <Dropdown.Item>
-                    Settings
+                    My Wallet
                 </Dropdown.Item>
                 <Dropdown.Item>
-                    Earnings
+                    My Reviews
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    Refferal
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    My Favourite
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    Classified Ads
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    My Events
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    My Discussions
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    Change Password
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    Delete Profile
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item>
-                    Logout
-                </Dropdown.Item> 
-                
+                <Link to="/logout"  >
+                    <Dropdown.Item >
+                        Logout
+                    </Dropdown.Item> 
+                </Link>
                 </Dropdown>
-            </div>
+            </div>}
             </Navbar>
         </div>
     )

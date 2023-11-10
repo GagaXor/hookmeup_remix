@@ -1,25 +1,34 @@
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import {
-  Form,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+
 import invariant from "tiny-invariant";
-
-import { deleteNote, getNote } from "~/models/note.server";
+import { deleteNote } from "~/models/note.server";
+import { getProfileById } from "~/models/profile.server";
 import { requireUserId } from "~/session.server";
-
+import EscortProfile from "~/components/EscortProfile";
+import { Header } from "~/components/Header";
 export const loader = async ({ params, request }: LoaderArgs) => {
-  const userId = await requireUserId(request);
-  invariant(params.noteId, "noteId not found");
+  await requireUserId(request);
+  invariant(params.escortId, "Profile not found");
 
-  const note = await getNote({ id: params.noteId, userId });
-  if (!note) {
-    throw new Response("Not Found", { status: 404 });
+  const escort = await getProfileById(params.escortId);
+  if (!escort) {
+    throw new Response("Not found", {status: 404});
   }
-  return json({ note });
+
+  return json(escort);
+
+  // const note = await getNote({ id: params.noteId, userId });
+  // if (!note) {
+  //   throw new Response("Not Found", { status: 404 });
+  // }
+  // return json(note);
+
 };
 
 export const action = async ({ params, request }: ActionArgs) => {
@@ -32,8 +41,11 @@ export const action = async ({ params, request }: ActionArgs) => {
 };
 
 export default function EscortDetail(){
+  const profile = useLoaderData<typeof loader>();
+
     return (<div>
-        
+        <Header/>
+        <EscortProfile/>
     </div>)
 }
 

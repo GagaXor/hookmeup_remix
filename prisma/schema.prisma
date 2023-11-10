@@ -1,10 +1,13 @@
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -13,13 +16,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   password Password?
-  firstName String?
-  lastName String?
   notes    Note[]
-  userType String?
+  role String? @default("USER")
+  profile Profile ? 
 }
-
-
 
 model Password {
   hash String
@@ -38,34 +38,72 @@ model Note {
   userId String
 }
 
-model Escort {
-  id String @id
-  bio String
-  country String
-  state String
-  city String
+model Profile {
+  id String @id 
+  fullName String
+  dob DateTime
+  city City ? @relation(fields: [cityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cityId String
   gender String
   phone String
+  userType String @default("CLIENT")
+  bio String
+  escort Escort ?
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+  media Media[]
+  profilePictureUrl String ?
+  verification Verification ?
+}
+
+
+model Escort {
+  id String @id @default(cuid())    
   sexualOrientation String?
   build String?
   bustSize String?
   occupation String?
   education String?
   smoker Boolean?
-  createdAt DateTime @default(now())
-  lastLogin DateTime
-  profileViews Int @default(0)
-}
-
-model Client {
-  id String @id
-  country String
-  state String
-  city String
-  gender String
-  phone String
-  createdAt DateTime @default(now())
-  lastLogin DateTime
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  profileId String @unique
   
 }
 
+model Country {
+  id String @id
+  name String
+  states State[] 
+}
+
+model State {
+  id String @id @default(cuid())
+  name String
+  country Country @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId String
+  cities City[]
+}
+
+model City {
+  id String @id @default(cuid())
+  name String
+  state State @relation(fields: [stateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  stateId String
+  profile Profile[]
+}
+
+model Media{
+  id String @id @default(cuid())
+  mediaUrl String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  profileId String 
+}
+
+model Verification {
+  id String @id @default(cuid())
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  profileId String @unique
+  verified Boolean
+  verificationMediaUrl String
+  createdAt DateTime @default(now())
+}

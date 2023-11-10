@@ -1,0 +1,14 @@
+version: '4.22'
+services:
+  postgres:
+    image: postgres:10.3
+    restart: always
+    environment:
+      - POSTGRES_USER=ogaga
+      - POSTGRES_PASSWORD=Manofchrist77
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+volumes:
+  postgres:

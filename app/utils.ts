@@ -69,3 +69,20 @@ export function useUser(): User {
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
 }
+
+export function stringify(obj: any) {
+  let cache: [] | null = [];
+  let str = JSON.stringify(obj, function(key, value) {
+    if (typeof value === "object" && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        // Circular reference found, discard key
+        return;
+      }
+      // Store value in our collection
+      cache.push(value);
+    }
+    return value;
+  });
+  cache = null; // reset the cache
+  return str;
+}

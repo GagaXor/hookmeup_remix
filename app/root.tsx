@@ -16,7 +16,7 @@ import {  getUser } from "~/session.server";
 import { json } from "@remix-run/node";
 
 
-export const meta: V2_MetaFunction = () => [{ title: "Remix Notes" }];
+export const meta: V2_MetaFunction = () => [{ title: "Hook Me Up" }];
 
 
 export const links: LinksFunction = () => [
@@ -31,7 +31,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 };
 
 export default function App() {
-  
+
   return (
     <html lang="en" className="dark">
       <head>

@@ -6,22 +6,23 @@ import { prisma } from "~/db.server";
 export type { User } from "@prisma/client";
 
 export async function getUserById(id: User["id"]) {
-  return prisma.user.findUnique({ where: { id } });
+  return prisma.user.findUnique({ 
+    where: { id },
+    select: {id: true, email: true, createdAt: true, updatedAt: true, role: true, profile: true}
+   });
+
 }
 
 export async function getUserByEmail(email: User["email"]) {
   return prisma.user.findUnique({ where: { email } });
 }
 
-export async function createUser(email: User["email"], password: string, userType :User["userType"], firstName: User["firstName"], lastName: User["lastName"]) {
+export async function createUser(email: User["email"], password: string,) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   return prisma.user.create({
     data: {
       email,
-      firstName,
-      lastName,
-      userType,
       password: {
         create: {
           hash: hashedPassword,
